@@ -33,7 +33,7 @@ const configs: Config[] = [
     title: "Base64 decode",
     method: (value: string) =>
       new TextDecoder().decode(
-        Uint8Array.from(atob(value), (m) => m.codePointAt(0))
+        Uint8Array.from(atob(value) as any, (m: any) => m.codePointAt(0))
       ),
   },
 ];
