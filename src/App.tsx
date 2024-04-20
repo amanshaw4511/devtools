@@ -9,7 +9,6 @@ import {
 import "./App.css";
 import { useState } from "react";
 import { Config, configs } from "./transformer";
-import { red } from "@mui/material/colors";
 
 function App() {
   const defaultConfg = configs[0];
@@ -19,23 +18,25 @@ function App() {
   const [toText, setToText] = useState("");
   const [error, setError] = useState("");
 
-  const onConfigChange = (_: any, newConfig: Config | null) => {
+  const onConfigChange = async (_: any, newConfig: Config | null) => {
     const finalConfig = newConfig ?? defaultConfg;
     setConfig(finalConfig);
     try {
-      setToText(finalConfig.method(fromText));
+      setToText(await finalConfig.method(fromText));
       setError("");
     } catch (e) {
+      console.error(e);
       setError("error");
     }
   };
 
-  const onFromChange = (n: any) => {
+  const onFromChange = async (n: any) => {
     setFromText(n.target.value);
     try {
-      setToText(config.method(n.target.value));
+      setToText(await config.method(n.target.value));
       setError("");
     } catch (e) {
+      console.error(e);
       setError("error");
     }
   };
