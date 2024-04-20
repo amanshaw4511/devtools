@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   TextField,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import "./App.css";
@@ -46,21 +45,22 @@ function App() {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ m: 4 }}>
       <Autocomplete
         options={configs}
         getOptionLabel={(config) => config.title}
         value={config}
         onChange={onConfigChange}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField sx={{ width: 500 }} {...params} />}
       />
 
       <Typography variant="h5" pt={2} pb={1}>
         Input <Typography color="red">{error}</Typography>
       </Typography>
       <Box>
-        <TextareaAutosize
-          minRows={4}
+        <textarea
+          rows={4}
+          style={{ width: 500 }}
           onChange={onFromChange}
           value={fromText}
         />
@@ -69,7 +69,12 @@ function App() {
         Output
       </Typography>
       <Box>
-        <TextareaAutosize minRows={4} onChange={onToChange} value={toText} />
+        <textarea
+          rows={4}
+          style={{ width: 500 }}
+          onChange={onToChange}
+          value={toText}
+        />
       </Box>
     </Container>
   );
