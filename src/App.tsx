@@ -3,11 +3,13 @@ import {
   Box,
   Container,
   TextField,
+  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs } from "./transformer";
+import { red } from "@mui/material/colors";
 
 function App() {
   const defaultConfg = configs[0];
@@ -15,16 +17,27 @@ function App() {
 
   const [fromText, setFromText] = useState("");
   const [toText, setToText] = useState("");
+  const [error, setError] = useState("");
 
   const onConfigChange = (_: any, newConfig: Config | null) => {
     const finalConfig = newConfig ?? defaultConfg;
     setConfig(finalConfig);
-    setToText(finalConfig.method(fromText));
+    try {
+      setToText(finalConfig.method(fromText));
+      setError("");
+    } catch (e) {
+      setError("error");
+    }
   };
 
   const onFromChange = (n: any) => {
     setFromText(n.target.value);
-    setToText(config.method(n.target.value));
+    try {
+      setToText(config.method(n.target.value));
+      setError("");
+    } catch (e) {
+      setError("error");
+    }
   };
 
   const onToChange = (event: any) => {
@@ -41,22 +54,21 @@ function App() {
         renderInput={(params) => <TextField {...params} />}
       />
 
-      <Typography pt={2} pb={1}>
-        From
+      <Typography variant="h5" pt={2} pb={1}>
+        Input <Typography color="red">{error}</Typography>
       </Typography>
       <Box>
-        <TextField
-          multiline
-          rows={4}
+        <TextareaAutosize
+          minRows={4}
           onChange={onFromChange}
           value={fromText}
         />
       </Box>
-      <Typography pt={2} pb={1}>
-        To
+      <Typography variant="h5" pt={2} pb={1}>
+        Output
       </Typography>
       <Box>
-        <TextField multiline rows={4} onChange={onToChange} value={toText} />
+        <TextareaAutosize minRows={4} onChange={onToChange} value={toText} />
       </Box>
     </Container>
   );
