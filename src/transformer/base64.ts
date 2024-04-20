@@ -17,3 +17,14 @@ export const base64_decode: Config = {
       Uint8Array.from(atob(value) as any, (m: any) => m.codePointAt(0))
     ),
 };
+if (process.env.NODE_ENV === "test") {
+  describe("base64", () => {
+    it("encode", () => {
+      expect(base64_encode.method("hello")).toBe("aGVsbG8=");
+    });
+
+    it("decode", () => {
+      expect(base64_decode.method("aGVsbG8=")).toBe("hello");
+    });
+  });
+}
