@@ -1,4 +1,9 @@
-import { base64_decode, base64_encode } from "./base64";
+import {
+  base64_decode,
+  base64_encode,
+  base64_url_decode,
+  base64_url_encode,
+} from "./base64";
 import { jwt_parse } from "./jwt";
 
 export type Transformer = (value: string) => string;
@@ -20,4 +25,6 @@ export const configs: Config[] = [
   base64_encode,
   base64_decode,
   jwt_parse,
+  base64_url_encode,
+  base64_url_decode,
 ];
