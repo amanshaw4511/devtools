@@ -1,4 +1,6 @@
 use wasm_bindgen::prelude::wasm_bindgen;
+mod base64;
+mod jwt;
 
 #[wasm_bindgen]
 pub fn to_upper_case(input: &str) -> String {
