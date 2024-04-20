@@ -7,36 +7,7 @@ import {
 } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
-type Config = {
-  title: string;
-  method: (value: string) => string;
-};
-const configs: Config[] = [
-  {
-    title: "To upper case",
-    method: (value: string) => value.toLocaleUpperCase(),
-  },
-  {
-    title: "To lower case",
-    method: (value: string) => value.toLocaleLowerCase(),
-  },
-  {
-    title: "Base64 encode",
-    method: (value: string) =>
-      btoa(
-        Array.from(new TextEncoder().encode(value), (byte) =>
-          String.fromCodePoint(byte)
-        ).join("")
-      ),
-  },
-  {
-    title: "Base64 decode",
-    method: (value: string) =>
-      new TextDecoder().decode(
-        Uint8Array.from(atob(value) as any, (m: any) => m.codePointAt(0))
-      ),
-  },
-];
+import { Config, configs } from "./transformer";
 
 function App() {
   const defaultConfg = configs[0];
