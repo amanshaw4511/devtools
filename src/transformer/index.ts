@@ -1,14 +1,11 @@
-import {
+import init, {
   base64_decode,
   base64_encode,
   base64_url_decode,
   base64_url_encode,
-} from "./base64";
-import { jwt_parse } from "./jwt";
-
-import init, {
   to_lower_case,
   to_upper_case,
+  jwt_parse,
 } from "../../dev-tool-wasm/pkg/dev_tool_wasm";
 
 export type Transformer = (value: string) => string | Promise<string>;
@@ -29,9 +26,21 @@ export const configs: Config[] = [
     title: "To lower case",
     method: to_lower_case,
   },
-  base64_encode,
-  base64_decode,
-  jwt_parse,
-  base64_url_encode,
-  base64_url_decode,
+  {
+    title: "Base64 encode",
+    method: base64_encode,
+  },
+  {
+    title: "Base64 decode",
+    method: base64_decode,
+  },
+  {
+    title: "Base64 url encode",
+    method: base64_url_encode,
+  },
+  {
+    title: "Base64 url decode",
+    method: base64_url_decode,
+  },
+  { title: "JWT parser", method: jwt_parse },
 ];
