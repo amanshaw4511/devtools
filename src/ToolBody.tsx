@@ -40,6 +40,7 @@ export const ToolBody = ({
           style={{ width: 500 }}
           onChange={(e) => handleOutputChange(e.target.value)}
           value={outputText}
+          disabled
         />
       </Box>
     </Box>
