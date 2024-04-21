@@ -32,13 +32,13 @@ const App = () => {
     }
   };
 
-  const handleInputChange = async (n: any) => {
-    setInputText(n.target.value);
-    onConfigOrInputChange(selectedTool, n.target.value);
+  const handleInputChange = async (newInputText: string) => {
+    setInputText(newInputText);
+    onConfigOrInputChange(selectedTool, newInputText);
   };
 
-  const hanldeOutputChange = (event: any) => {
-    setOutputText(event.target.value);
+  const hanldeOutputChange = (newOutputText: string) => {
+    setOutputText(newOutputText);
   };
 
   return (
