@@ -57,7 +57,7 @@ function App() {
           </Typography>
           <Box>
             <textarea
-              rows={4}
+              rows={6}
               style={{ width: 500 }}
               onChange={onFromChange}
               value={fromText}
@@ -68,7 +68,7 @@ function App() {
           </Typography>
           <Box>
             <textarea
-              rows={4}
+              rows={6}
               style={{ width: 500 }}
               onChange={onToChange}
               value={toText}
