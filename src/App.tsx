@@ -1,21 +1,22 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs as allConfigs } from "./transformer";
 import { ToolMenu } from "./ToolMenu";
+import { ToolBody } from "./ToolBody";
 
-function App() {
+const App = () => {
   const [availableTools, setAvailableTools] = useState<Config[]>(allConfigs);
 
   const [selectedTool, setSelectedTool] = useState<Config>(availableTools[0]);
 
-  const [fromText, setFromText] = useState("");
-  const [toText, setToText] = useState("");
-  const [error, setError] = useState("");
+  const [inputText, setInputText] = useState("");
+  const [outputText, setOutputText] = useState("");
+  const [errorText, setErrorText] = useState("");
 
   const hanleToolChange = async (newSelectedTool: Config) => {
     setSelectedTool(newSelectedTool);
-    onConfigOrInputChange(newSelectedTool, fromText);
+    onConfigOrInputChange(newSelectedTool, inputText);
   };
 
   const onConfigOrInputChange = async (
@@ -23,61 +24,46 @@ function App() {
     newInput: string
   ) => {
     try {
-      setToText(await newSelectedTool.method(newInput));
-      setError("");
+      setOutputText(await newSelectedTool.method(newInput));
+      setErrorText("");
     } catch (e) {
       console.error(e);
-      setError("error");
+      setErrorText("Error");
     }
   };
 
-  const onFromChange = async (n: any) => {
-    setFromText(n.target.value);
+  const handleInputChange = async (n: any) => {
+    setInputText(n.target.value);
     onConfigOrInputChange(selectedTool, n.target.value);
   };
 
-  const onToChange = (event: any) => {
-    setToText(event.target.value);
+  const hanldeOutputChange = (event: any) => {
+    setOutputText(event.target.value);
   };
 
   return (
     <Container maxWidth="sm" sx={{ m: 4 }}>
-      <Stack direction="row" spacing={2}>
-        <Box sx={{ minWidth: 300, minHeight: 600 }}>
-          <ToolMenu
-            selectedTool={selectedTool}
-            availableTools={availableTools}
-            handleToolChange={hanleToolChange}
-            setAvailableTools={setAvailableTools}
+      <Stack direction="row" spacing={4}>
+        <ToolMenu
+          selectedTool={selectedTool}
+          availableTools={availableTools}
+          handleToolChange={hanleToolChange}
+          setAvailableTools={setAvailableTools}
+          sx={{ minWidth: 300, minHeight: 600 }}
+        />
+        <Stack>
+          <Typography variant="h2">{selectedTool.title}</Typography>
+          <ToolBody
+            errorText={errorText}
+            inputText={inputText}
+            outputText={outputText}
+            handleInputChange={handleInputChange}
+            handleOutputChange={hanldeOutputChange}
           />
-        </Box>
-        <Box>
-          <Typography variant="h5" pt={2} pb={1}>
-            Input <Typography color="red">{error}</Typography>
-          </Typography>
-          <Box>
-            <textarea
-              rows={6}
-              style={{ width: 500 }}
-              onChange={onFromChange}
-              value={fromText}
-            />
-          </Box>
-          <Typography variant="h5" pt={2} pb={1}>
-            Output
-          </Typography>
-          <Box>
-            <textarea
-              rows={6}
-              style={{ width: 500 }}
-              onChange={onToChange}
-              value={toText}
-            />
-          </Box>
-        </Box>
+        </Stack>
       </Stack>
     </Container>
   );
-}
+};
 
 export default App;

@@ -4,6 +4,7 @@ import {
   MenuList,
   MenuItem,
   ListItemText,
+  SxProps,
 } from "@mui/material";
 import { Config, configs as allConfigs } from "./transformer";
 import { useState } from "react";
@@ -13,6 +14,7 @@ export type ToolMenuProps = {
   selectedTool: Config;
   setAvailableTools: (tools: Config[]) => void;
   handleToolChange: (tool: Config) => void;
+  sx?: SxProps;
 };
 
 export const ToolMenu = ({
@@ -20,6 +22,7 @@ export const ToolMenu = ({
   selectedTool,
   setAvailableTools,
   handleToolChange,
+  sx,
 }: ToolMenuProps) => {
   const [searchText, setSearchText] = useState("");
 
@@ -39,7 +42,7 @@ export const ToolMenu = ({
     handleToolChange(newSelectedTool);
   };
   return (
-    <Paper>
+    <Paper sx={sx}>
       <TextField
         label="Search Tools"
         value={searchText}
