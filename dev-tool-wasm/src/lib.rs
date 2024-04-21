@@ -1,5 +1,6 @@
 use wasm_bindgen::prelude::wasm_bindgen;
 mod base64;
+mod formatter;
 mod jwt;
 
 #[wasm_bindgen]
