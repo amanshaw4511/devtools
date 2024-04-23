@@ -1,11 +1,17 @@
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Tooltip, Typography } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs as allConfigs } from "./transformer";
 import { ToolMenu } from "./ToolMenu";
 import { ToolBody } from "./ToolBody";
+import { MaterialUISwitch } from "./MaterialUiSwitch";
 
-const App = () => {
+type AppProps = {
+  isDarkTheme: boolean;
+  toggleDarkTheme: () => void;
+};
+
+const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
   const [availableTools, setAvailableTools] = useState<Config[]>(allConfigs);
 
   const [selectedTool, setSelectedTool] = useState<Config>(availableTools[0]);
@@ -43,24 +49,34 @@ const App = () => {
 
   return (
     <Container maxWidth="sm" sx={{ m: 4 }}>
-      <Stack direction="row" spacing={4}>
-        <ToolMenu
-          selectedTool={selectedTool}
-          availableTools={availableTools}
-          handleToolChange={hanleToolChange}
-          setAvailableTools={setAvailableTools}
-          sx={{ minWidth: 300, minHeight: 600 }}
-        />
-        <Stack>
-          <Typography variant="h2">{selectedTool.title}</Typography>
-          <ToolBody
-            errorText={errorText}
-            inputText={inputText}
-            outputText={outputText}
-            handleInputChange={handleInputChange}
-            handleOutputChange={hanldeOutputChange}
+      <Stack direction="row">
+        <Stack direction="row" spacing={4}>
+          <ToolMenu
+            selectedTool={selectedTool}
+            availableTools={availableTools}
+            handleToolChange={hanleToolChange}
+            setAvailableTools={setAvailableTools}
+            sx={{ minWidth: 300, minHeight: 600 }}
           />
+          <Stack>
+            <Typography variant="h2">{selectedTool.title}</Typography>
+            <ToolBody
+              errorText={errorText}
+              inputText={inputText}
+              outputText={outputText}
+              handleInputChange={handleInputChange}
+              handleOutputChange={hanldeOutputChange}
+            />
+          </Stack>
         </Stack>
+
+        <Tooltip title="Change Theme">
+          <MaterialUISwitch
+            sx={{ ml: 8 }}
+            checked={isDarkTheme}
+            onClick={toggleDarkTheme}
+          />
+        </Tooltip>
       </Stack>
     </Container>
   );
