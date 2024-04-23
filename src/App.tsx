@@ -1,10 +1,11 @@
-import { Container, Stack, Tooltip, Typography } from "@mui/material";
+import { Container, Stack, Tooltip } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs as allConfigs } from "./transformer";
 import { ToolMenu } from "./ToolMenu";
 import { ToolBody } from "./ToolBody";
 import { MaterialUISwitch } from "./MaterialUiSwitch";
+import { ToolTitle } from "./ToolTittle";
 
 type AppProps = {
   isDarkTheme: boolean;
@@ -59,7 +60,7 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
             sx={{ minWidth: 300, minHeight: 600 }}
           />
           <Stack>
-            <Typography variant="h2">{selectedTool.title}</Typography>
+            <ToolTitle selectedToolTitle={selectedTool.title} />
             <ToolBody
               errorText={errorText}
               inputText={inputText}
