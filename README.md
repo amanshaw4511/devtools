@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# DevTools
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A collection of essential developer tools and utilities to streamline development workflows and boost productivity.
 
-Currently, two official plugins are available:
+## 🌐 **Live Demo**
+Check out the live application here: [DevTools Website](https://devtools.amansaw.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 **Tools Available**
+- Base64 encoder
+- Base64 decoder
+- Base64 url encoder
+- Base64 url decoder
+- JWT parser
+- XML formatter
+- JSON formatter
 
-## Expanding the ESLint configuration
+## 📦 **Local Setup**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/amanshaw4511/devtools.git
+   cd devtools
+   ```
+2. Install Node dependencies:
+   ```bash
+   pnpm install
+   ```
+3. Run the React application:
+   ```bash
+   pnpm run dev
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The backend tools are written in **Rust** and compiled into **WebAssembly**, enabling seamless integration into the React application without requiring a backend server.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🛠️ **Setup Rust Project**
+1. Ensure Rust is installed. Follow the [Rust installation guide](https://www.rust-lang.org/tools/install).
+2. Navigate to the Rust project directory:
+   ```bash
+   cd dev-tools-wasm
+   ```
+3. Install `wasm-pack`:
+   ```bash
+   cargo install wasm-pack
+   ```
+4. Compile the Rust code into WebAssembly:
+   ```bash
+   wasm-pack build --target web
+   ```
+5. The compiled WebAssembly module will now be accessible from the React application.
