@@ -1,5 +1,5 @@
 rm -rf build
-npm run build
+pnpm run build
 rm dist.zip
 zip -r dist.zip dist
-scp dist.zip aman@107.174.121.104:~/
+scp dist.zip aman@racknerd:~/devtools

@@ -7,6 +7,7 @@ import init, {
   to_upper_case,
   jwt_parse,
   json_format,
+  xml_format,
 } from "../../dev-tool-wasm/pkg/dev_tool_wasm";
 
 export type Transformer = (value: string) => string | Promise<string>;
@@ -47,5 +48,9 @@ export const configs: Config[] = [
   {
     title: "JSON formatter",
     method: json_format,
+  },
+  {
+    title: "XML formatter",
+    method: xml_format,
   },
 ];
