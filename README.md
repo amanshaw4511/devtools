@@ -46,3 +46,68 @@ The backend tools are written in **Rust** and compiled into **WebAssembly**, ena
    wasm-pack build --target web
    ```
 5. The compiled WebAssembly module will now be accessible from the React application.
+
+---
+
+## ⚙️ **Adding a New Tool**
+
+To add a new tool, follow the steps below. We'll demonstrate this by adding a **Character Counter** tool.
+
+### 1. **Create a new Rust module:**
+
+- Create a new file in the `dev-tools-wasm/src` directory named `character-counter.rs`.
+- Add the following code:
+  ```rust
+  #[wasm_bindgen]
+  pub fn character_counter(input: &str) -> String {
+      input.len().to_string()
+  }
+
+  // Unit tests
+  #[cfg(test)]
+  mod tests {
+      use super::*;
+
+      #[test]
+      fn test_character_counter() {
+          assert_eq!(character_counter("hello world!"), "12");
+      }
+  }
+  ```
+
+### 2. **Update `lib.rs`:**
+
+- Open `dev-tools-wasm/src/lib.rs` and add the new module.
+  ```rust
+  mod character_counter;
+  ```
+
+### 3. **Rebuild the WebAssembly module:**
+   Rebuild the project to compile the new tool into WebAssembly:
+   ```bash
+   wasm-pack build --target web
+   ```
+
+### 4. **Update the React UI:**
+
+- Open `src/transformer/index.ts`.
+- Update the `configs` array to add your new tool:
+  ```ts
+  export const configs: Config[] = [
+      // ... other tools
+      {
+          title: "Character Counter",
+          method: "character_counter", // This should match the Rust function name
+      }
+  ]
+  ```
+
+### 5. **Verify the changes:**
+
+- Run the application to see the new tool in action:
+  ```bash
+  pnpm run dev
+  ```
+
+---
+
