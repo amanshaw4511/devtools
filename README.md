@@ -3,9 +3,11 @@
 A collection of essential developer tools and utilities to streamline development workflows and boost productivity.
 
 ## 🌐 **Live Demo**
+
 Check out the live application here: [DevTools Website](https://devtools.amansaw.com/)
 
 ## 🚀 **Tools Available**
+
 - Base64 encoder
 - Base64 decoder
 - Base64 url encoder
@@ -15,6 +17,7 @@ Check out the live application here: [DevTools Website](https://devtools.amansaw
 - JSON formatter
 
 ## 📦 **Local Setup**
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/amanshaw4511/devtools.git
@@ -32,10 +35,11 @@ Check out the live application here: [DevTools Website](https://devtools.amansaw
 The backend tools are written in **Rust** and compiled into **WebAssembly**, enabling seamless integration into the React application without requiring a backend server.
 
 ## 🛠️ **Setup Rust Project**
+
 1. Ensure Rust is installed. Follow the [Rust installation guide](https://www.rust-lang.org/tools/install).
 2. Navigate to the Rust project directory:
    ```bash
-   cd dev-tools-wasm
+   cd dev-tool-wasm
    ```
 3. Install `wasm-pack`:
    ```bash
@@ -55,8 +59,9 @@ To add a new tool, follow the steps below. We'll demonstrate this by adding a **
 
 ### 1. **Create a new Rust module:**
 
-- Create a new file in the `dev-tools-wasm/src` directory named `character-counter.rs`.
+- Create a new file in the `dev-tool-wasm/src` directory named `character-counter.rs`.
 - Add the following code:
+
   ```rust
   #[wasm_bindgen]
   pub fn character_counter(input: &str) -> String {
@@ -77,16 +82,18 @@ To add a new tool, follow the steps below. We'll demonstrate this by adding a **
 
 ### 2. **Update `lib.rs`:**
 
-- Open `dev-tools-wasm/src/lib.rs` and add the new module.
+- Open `dev-tool-wasm/src/lib.rs` and add the new module.
   ```rust
   mod character_counter;
   ```
 
 ### 3. **Rebuild the WebAssembly module:**
-   Rebuild the project to compile the new tool into WebAssembly:
-   ```bash
-   wasm-pack build --target web
-   ```
+
+Rebuild the project to compile the new tool into WebAssembly:
+
+```bash
+wasm-pack build --target web
+```
 
 ### 4. **Update the React UI:**
 
@@ -94,12 +101,12 @@ To add a new tool, follow the steps below. We'll demonstrate this by adding a **
 - Update the `configs` array to add your new tool:
   ```ts
   export const configs: Config[] = [
-      // ... other tools
-      {
-          title: "Character Counter",
-          method: "character_counter", // This should match the Rust function name
-      }
-  ]
+    // ... other tools
+    {
+      title: "Character Counter",
+      method: "character_counter", // This should match the Rust function name
+    },
+  ];
   ```
 
 ### 5. **Verify the changes:**
@@ -110,4 +117,3 @@ To add a new tool, follow the steps below. We'll demonstrate this by adding a **
   ```
 
 ---
-

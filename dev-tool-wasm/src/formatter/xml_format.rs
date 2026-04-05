@@ -1,4 +1,4 @@
-use wasm_bindgen::prelude::wasm_bindgen;
+use wasm_bindgen::prelude::{wasm_bindgen, JsValue};
 
 use quick_xml::events::Event;
 use quick_xml::{Reader, Writer};
@@ -20,7 +20,7 @@ use quick_xml::{Reader, Writer};
 ///   On a large 66K line minified XML document, this takes about 2700ms.
 ///   For small XMLs, the time is negligible.
 #[wasm_bindgen]
-pub fn xml_format(xml: &str) -> String {
+pub fn xml_format(xml: &str) -> Result<String, JsValue> {
     let mut buf = Vec::new();
 
     let mut reader = Reader::from_str(xml);
@@ -33,20 +33,30 @@ pub fn xml_format(xml: &str) -> String {
 
         match ev {
             Ok(Event::Eof) => break, // exits the loop when reaching end of file
-            Ok(event) => writer.write_event(event),
-            Err(e) => panic!("Error at position {}: {:?}", reader.buffer_position(), e),
+            Ok(event) => writer.write_event(event).map_err(|e| {
+                JsValue::from_str(&format!(
+                    "Failed to write XML event at pos {}: {e}",
+                    reader.buffer_position()
+                ))
+            })?,
+            Err(e) => {
+                return Err(JsValue::from_str(&format!(
+                    "XML parse error at position {}: {e}",
+                    reader.buffer_position()
+                )))
+            }
         }
-        .expect("Failed to parse XML");
 
         // If we don't keep a borrow elsewhere, we can clear the buffer to keep memory usage low
         buf.clear();
     }
 
-    let result = std::str::from_utf8(&*writer.into_inner())
-        .expect("Failed to convert a slice of bytes to a string slice")
+    let bytes = writer.into_inner();
+    let result = std::str::from_utf8(&bytes)
+        .map_err(|e| JsValue::from_str(&format!("XML to UTF-8 conversion failed: {e}")))?
         .to_string();
 
-    result
+    Ok(result)
 }
 
 #[cfg(test)]
@@ -56,7 +66,7 @@ mod tests {
     #[test]
     fn test_xml_format() {
         assert_eq!(
-            xml_format("<h1> <p> Hello</p> </h1><h1>World</h1>"),
+            xml_format("<h1> <p> Hello</p> </h1><h1>World</h1>").unwrap(),
             r"<h1>
   <p>Hello</p>
 </h1>

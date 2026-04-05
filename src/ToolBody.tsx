@@ -5,7 +5,6 @@ export type ToolBodyProps = {
   inputText: string;
   outputText: string;
   handleInputChange: (inputText: string) => void;
-  handleOutputChange: (inputText: string) => void;
   sx?: SxProps;
 };
 
@@ -14,7 +13,6 @@ export const ToolBody = ({
   outputText,
   errorText,
   handleInputChange,
-  handleOutputChange,
   sx,
 }: ToolBodyProps) => {
   return (
@@ -22,11 +20,11 @@ export const ToolBody = ({
       <Typography variant="h5" pt={2} pb={1}>
         Input
       </Typography>
-      <Typography color="red">{errorText}</Typography>
+      <Typography color="error">{errorText}</Typography>
       <Box>
         <textarea
           rows={6}
-          style={{ width: 500 }}
+          style={{ width: "100%" }}
           onChange={(e) => handleInputChange(e.target.value)}
           value={inputText}
         />
@@ -37,8 +35,7 @@ export const ToolBody = ({
       <Box>
         <textarea
           rows={6}
-          style={{ width: 500 }}
-          onChange={(e) => handleOutputChange(e.target.value)}
+          style={{ width: "100%" }}
           value={outputText}
           disabled
         />

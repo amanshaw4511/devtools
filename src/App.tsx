@@ -1,11 +1,11 @@
 import { Container, Stack, Tooltip } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
-import { Config, configs as allConfigs } from "./transformer";
+import { Config, configs as allConfigs, initReady } from "./transformer";
 import { ToolMenu } from "./ToolMenu";
 import { ToolBody } from "./ToolBody";
 import { MaterialUISwitch } from "./MaterialUiSwitch";
-import { ToolTitle } from "./ToolTittle";
+import { ToolTitle } from "./ToolTitle";
 
 type AppProps = {
   isDarkTheme: boolean;
@@ -21,21 +21,24 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
   const [outputText, setOutputText] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  const hanleToolChange = async (newSelectedTool: Config) => {
+  const handleToolChange = async (newSelectedTool: Config) => {
     setSelectedTool(newSelectedTool);
     onConfigOrInputChange(newSelectedTool, inputText);
   };
 
   const onConfigOrInputChange = async (
     newSelectedTool: Config,
-    newInput: string
+    newInput: string,
   ) => {
     try {
+      // Ensure WASM is initialized before invoking exported methods
+      await initReady;
       setOutputText(await newSelectedTool.method(newInput));
       setErrorText("");
     } catch (e) {
       console.error(e);
-      setErrorText("Error");
+      const message = e instanceof Error ? e.message : "Unexpected error";
+      setErrorText(message);
     }
   };
 
@@ -44,9 +47,7 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
     onConfigOrInputChange(selectedTool, newInputText);
   };
 
-  const hanldeOutputChange = (newOutputText: string) => {
-    setOutputText(newOutputText);
-  };
+  // No manual output editing; output is derived from input and selected tool
 
   return (
     <Container maxWidth="sm" sx={{ m: 4 }}>
@@ -55,7 +56,7 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
           <ToolMenu
             selectedTool={selectedTool}
             availableTools={availableTools}
-            handleToolChange={hanleToolChange}
+            handleToolChange={handleToolChange}
             setAvailableTools={setAvailableTools}
             sx={{ minWidth: 300, minHeight: 600 }}
           />
@@ -66,7 +67,6 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
               inputText={inputText}
               outputText={outputText}
               handleInputChange={handleInputChange}
-              handleOutputChange={hanldeOutputChange}
             />
           </Stack>
         </Stack>

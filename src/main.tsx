@@ -18,15 +18,14 @@ const Main = () => {
 
   const theme = useMemo(
     () => (isDarkTheme ? darkTheme : lightTheme),
-    [isDarkTheme]
+    [isDarkTheme],
   );
 
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <App isDarkTheme={isDarkTheme} toggleDarkTheme={toggleDarkTheme} />
-        </CssBaseline>
+        <CssBaseline />
+        <App isDarkTheme={isDarkTheme} toggleDarkTheme={toggleDarkTheme} />
       </ThemeProvider>
     </React.StrictMode>
   );

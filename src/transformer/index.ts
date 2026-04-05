@@ -17,7 +17,8 @@ export type Config = {
   method: Transformer;
 };
 
-init();
+// Expose a promise so callers can await WASM readiness before invoking methods.
+export const initReady: Promise<unknown> = init();
 
 export const configs: Config[] = [
   {
