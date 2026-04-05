@@ -1,33 +1,16 @@
-import React, { useMemo, useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
-const lightTheme = createTheme();
+import { AppThemeProvider } from "./context/theme-context.tsx";
+import { StrictMode } from "react";
 
 const Main = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const toggleDarkTheme = () => setIsDarkTheme((isDark) => !isDark);
-
-  const theme = useMemo(
-    () => (isDarkTheme ? darkTheme : lightTheme),
-    [isDarkTheme],
-  );
-
   return (
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App isDarkTheme={isDarkTheme} toggleDarkTheme={toggleDarkTheme} />
-      </ThemeProvider>
-    </React.StrictMode>
+    <StrictMode>
+      <AppThemeProvider>
+        <App />
+      </AppThemeProvider>
+    </StrictMode>
   );
 };
 
