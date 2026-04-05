@@ -49,14 +49,13 @@ Testing (TypeScript via Jest)
 - Filter by test name (pattern):
   - pnpm test -- -t "partial test name"
 - Watch mode:
-  - pnpm test -- --watch
+  - pnpm run test:watch
 
-Important Jest caveat
+Jest configuration
 
-- jest.config.js has testMatch:
-  - "**/**tests**/**/\*.[jt]s?(x)"
-  - "<rootDir>/src/\*_/(_.)ts" (broad; may match many .ts files, not just tests)
-- To avoid accidental collection, place TS tests under **tests**/ or name them _.test.ts(x). Prefer _.test.ts(x) next to the unit under test.
+- Transform: ts-jest for both .ts and .tsx
+- Test discovery: files under **tests**/ or named \*.test.ts(x)
+- Recommendation: co-locate tests as \*.test.ts(x) next to the unit under test
 
 Rust WASM Workflow (dev-tool-wasm)
 
@@ -76,6 +75,12 @@ Rust WASM Workflow (dev-tool-wasm)
 5. Optional Rust lint/format
    - cargo fmt --all
    - cargo clippy --all-targets --all-features -- -D warnings
+
+WASM initialization in TypeScript
+
+- The transformer module exports initReady (a Promise) that resolves when WASM is initialized.
+- Await initReady before calling any WASM-bound functions to avoid race conditions.
+- Example: await initReady; const out = await method(input)
 
 Code Style Guidelines
 
@@ -116,8 +121,8 @@ Error Handling
   - Wrap async calls in try/catch. Surface actionable messages to users; log detailed errors to console.
   - Avoid throwing non-Error values. Narrow unknown errors via instance checks or safe extraction of message.
 - Rust WASM:
-  - Current code often uses unwrap which will panic on bad input. For user-facing tools, prefer non-panicking parsing and return well-formed error messages.
-  - If refactoring, consider exporting Result<T, JsValue> with #[wasm_bindgen] so JS receives exceptions instead of panics, and handle them in TS.
+  - Exports return Result<String, JsValue>. Errors propagate to JS as exceptions; always catch in TS and show concise messages.
+  - Use clear, user-friendly error text (e.g., "Invalid JSON: …", "Invalid Base64: …").
 
 Testing Guidelines
 
@@ -131,6 +136,14 @@ Performance and UI
 
 - Prefer memoization only when profiling indicates benefit. Avoid unnecessary state updates; derive values from props/state where possible.
 - For MUI, prefer sx for theme-aware spacing/typography. Keep accessibility in mind (labels, aria- attributes).
+
+Responsive UI
+
+- Container: prefer maxWidth={false} and responsive padding to utilize full viewport width and height.
+- Layout: use Stack with direction switching by breakpoint (e.g., { xs: "column", md: "row" }) and set flexGrow/minWidth to prevent truncation.
+- Side menu: fixed width on md+ (e.g., 320px), full width on xs; cap height with calc(100vh - header) and enable overflow: auto.
+- Text areas: width 100% and height based on viewport (e.g., 28vh); increase fontSize and lineHeight for readability.
+- Theme-aware colors: prefer palette keys like color="error" or sx={{ color: 'error.main' }}.
 
 Build Artifacts and Imports
 
@@ -154,16 +167,21 @@ Common Tasks (Quick Commands)
 - Start dev: pnpm dev
 - Type-check+build: pnpm build
 - Lint: pnpm lint
+- Type-check only: pnpm run typecheck
 - Format (check): pnpm exec prettier --check .
-- Format (write): pnpm exec prettier --write .
-- TS tests: pnpm test -- src/foo/bar.test.ts -t "case name"
-- Rust tests: (cd dev-tool-wasm && cargo test base64_encode_test)
-- Build WASM: wasm-pack build dev-tool-wasm --target web
+- Format (write): pnpm run format
+- TS tests (single file/name): pnpm test -- src/foo/bar.test.ts -t "case name"
+- TS watch: pnpm run test:watch
+- Rust tests: pnpm run rust:test
+- Rust build: pnpm run rust:build
+- Rust fmt: pnpm run rust:fmt
+- Rust clippy: pnpm run rust:clippy
+- Build WASM bindings: pnpm run wasm:build
 
 Notes and Caveats
 
-- README currently references dev-tools-wasm; the actual crate dir is dev-tool-wasm. Use dev-tool-wasm in commands.
-- Jest testMatch may pick up non-test .ts files under src. Prefer \*.test.ts(x) naming to avoid accidental collection.
+- README crate path has been corrected to dev-tool-wasm.
+- Jest is configured to only discover tests under **tests**/ or \*.test.ts(x).
 
 Contribution Expectations
 
