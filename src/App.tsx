@@ -50,7 +50,7 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
   // No manual output editing; output is derived from input and selected tool
 
   return (
-    <Container maxWidth="sm" sx={{ m: 4 }}>
+    <Container maxWidth="md" sx={{ m: 4 }}>
       <Stack direction="row">
         <Stack direction="row" spacing={4}>
           <ToolMenu

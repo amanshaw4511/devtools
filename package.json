@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "wasm:build": "wasm-pack build dev-tool-wasm --target web"
+    "wasm:build": "wasm-pack build dev-tool-wasm --target web",
+    "rust:test": "cd dev-tool-wasm && cargo test",
+    "rust:build": "cd dev-tool-wasm && cargo build",
+    "rust:fmt": "cd dev-tool-wasm && cargo fmt --all",
+    "rust:clippy": "cd dev-tool-wasm && cargo clippy --all-targets --all-features -- -D warnings"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
