@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "commonjs",
+  "engines": {
+    "node": "22.x",
+    "npm": "10.x"
+  },
   "scripts": {
     "dev": "vite",
     "test": "jest",
@@ -19,28 +23,34 @@
     "rust:clippy": "cd dev-tool-wasm && cargo clippy --all-targets --all-features -- -D warnings"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@fontsource/roboto": "^5.0.12",
-    "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.10",
+    "@mui/icons-material": "^5.18.0",
+    "@mui/material": "^5.18.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.26",
     "jest": "^29.7.0",
-    "prettier": "^3.2.5",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "prettier": "^3.8.1",
+    "ts-jest": "^29.4.9",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild"
+    ]
   }
 }
