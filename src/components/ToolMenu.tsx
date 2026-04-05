@@ -6,7 +6,7 @@ import {
   ListItemText,
   SxProps,
 } from "@mui/material";
-import { Config, configs as allConfigs } from "./transformer";
+import { Config, configs as allConfigs } from "../transformer";
 import { useState } from "react";
 
 export type ToolMenuProps = {
@@ -30,12 +30,12 @@ export const ToolMenu = ({
     setSearchText(searchText);
     setAvailableTools(
       allConfigs.filter((it) =>
-        it.title.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-      )
+        it.title.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()),
+      ),
     );
   };
 
-  const onConfigChange = async (_: any, newSelectedTool: Config | null) => {
+  const onConfigChange = async (_: unknown, newSelectedTool: Config | null) => {
     if (newSelectedTool === null) {
       return;
     }
@@ -48,6 +48,7 @@ export const ToolMenu = ({
         value={searchText}
         onChange={(e) => handleToolsSearch(e.target.value)}
         fullWidth
+        sx={{ mb: 2 }}
       />
       <MenuList>
         {availableTools.map((tool) => (
@@ -57,7 +58,7 @@ export const ToolMenu = ({
             onClick={() =>
               onConfigChange(
                 null,
-                availableTools.find((it) => it.title === tool.title) ?? null
+                availableTools.find((it) => it.title === tool.title) ?? null,
               )
             }
           >

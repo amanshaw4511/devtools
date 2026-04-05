@@ -1,19 +1,14 @@
-import { Container, Stack, Tooltip, IconButton } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs as allConfigs, initReady } from "./transformer";
-import { ToolMenu } from "./ToolMenu";
-import { ToolBody } from "./ToolBody";
-import { MaterialUISwitch } from "./MaterialUiSwitch";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import { ToolTitle } from "./ToolTitle";
+import { ToolMenu } from "./components/ToolMenu";
+import { ToolBody } from "./components/ToolBody";
+import { ToolTitle } from "./components/ToolTitle";
+import { Header } from "./components/Header";
 
-type AppProps = {
-  isDarkTheme: boolean;
-  toggleDarkTheme: () => void;
-};
 
-const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
+const App = () => {
   const [availableTools, setAvailableTools] = useState<Config[]>(allConfigs);
 
   const [selectedTool, setSelectedTool] = useState<Config>(availableTools[0]);
@@ -56,10 +51,10 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
       sx={{ px: { xs: 2, md: 4 }, py: 2, minHeight: "100vh" }}
     >
       <Stack
-        direction={{ xs: "column", md: "row" }}
         spacing={3}
-        alignItems="flex-start"
+        alignItems="flex-end"
       >
+        <Header />
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={3}
@@ -87,26 +82,7 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
             />
           </Stack>
         </Stack>
-        <IconButton
-          aria-label="Open GitHub repository"
-          component="a"
-          href="https://github.com/amanshaw4511/devtools"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            alignSelf: { xs: "flex-end", md: "flex-start" },
-            mr: { md: 1, xs: 0 },
-          }}
-        >
-          <GitHubIcon />
-        </IconButton>
-        <Tooltip title="Change Theme">
-          <MaterialUISwitch
-            sx={{ alignSelf: { xs: "flex-end", md: "flex-start" } }}
-            checked={isDarkTheme}
-            onClick={toggleDarkTheme}
-          />
-        </Tooltip>
+
       </Stack>
     </Container>
   );
