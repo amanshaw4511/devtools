@@ -23,8 +23,12 @@ export const ToolBody = ({
       <Typography color="error">{errorText}</Typography>
       <Box>
         <textarea
-          rows={12}
-          style={{ width: "100%", fontSize: 16, lineHeight: 1.5 }}
+          style={{
+            width: "100%",
+            fontSize: 16,
+            lineHeight: 1.5,
+            height: "28vh",
+          }}
           onChange={(e) => handleInputChange(e.target.value)}
           value={inputText}
         />
@@ -34,8 +38,12 @@ export const ToolBody = ({
       </Typography>
       <Box>
         <textarea
-          rows={12}
-          style={{ width: "100%", fontSize: 16, lineHeight: 1.5 }}
+          style={{
+            width: "100%",
+            fontSize: 16,
+            lineHeight: 1.5,
+            height: "28vh",
+          }}
           value={outputText}
           disabled
         />

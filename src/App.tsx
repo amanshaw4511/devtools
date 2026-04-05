@@ -50,17 +50,33 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
   // No manual output editing; output is derived from input and selected tool
 
   return (
-    <Container maxWidth="md" sx={{ m: 4 }}>
-      <Stack direction="row">
-        <Stack direction="row" spacing={4}>
+    <Container
+      maxWidth={false}
+      sx={{ px: { xs: 2, md: 4 }, py: 2, minHeight: "100vh" }}
+    >
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={3}
+        alignItems="flex-start"
+      >
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={3}
+          sx={{ flexGrow: 1, width: 1, minWidth: 0 }}
+        >
           <ToolMenu
             selectedTool={selectedTool}
             availableTools={availableTools}
             handleToolChange={handleToolChange}
             setAvailableTools={setAvailableTools}
-            sx={{ minWidth: 300, minHeight: 600 }}
+            sx={{
+              width: { xs: "100%", md: 320 },
+              maxHeight: { md: "calc(100vh - 120px)" },
+              overflow: "auto",
+              flexShrink: 0,
+            }}
           />
-          <Stack>
+          <Stack sx={{ flexGrow: 1, minWidth: 0 }}>
             <ToolTitle selectedToolTitle={selectedTool.title} />
             <ToolBody
               errorText={errorText}
@@ -70,10 +86,9 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
             />
           </Stack>
         </Stack>
-
         <Tooltip title="Change Theme">
           <MaterialUISwitch
-            sx={{ ml: 8 }}
+            sx={{ alignSelf: { xs: "flex-end", md: "flex-start" } }}
             checked={isDarkTheme}
             onClick={toggleDarkTheme}
           />
