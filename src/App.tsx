@@ -1,10 +1,11 @@
-import { Container, Stack, Tooltip } from "@mui/material";
+import { Container, Stack, Tooltip, IconButton } from "@mui/material";
 import "./App.css";
 import { useState } from "react";
 import { Config, configs as allConfigs, initReady } from "./transformer";
 import { ToolMenu } from "./ToolMenu";
 import { ToolBody } from "./ToolBody";
 import { MaterialUISwitch } from "./MaterialUiSwitch";
+import GitHubIcon from "@mui/icons-material/GitHub";
 import { ToolTitle } from "./ToolTitle";
 
 type AppProps = {
@@ -86,6 +87,19 @@ const App = ({ isDarkTheme, toggleDarkTheme }: AppProps) => {
             />
           </Stack>
         </Stack>
+        <IconButton
+          aria-label="Open GitHub repository"
+          component="a"
+          href="https://github.com/amanshaw4511/devtools"
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            alignSelf: { xs: "flex-end", md: "flex-start" },
+            mr: { md: 1, xs: 0 },
+          }}
+        >
+          <GitHubIcon />
+        </IconButton>
         <Tooltip title="Change Theme">
           <MaterialUISwitch
             sx={{ alignSelf: { xs: "flex-end", md: "flex-start" } }}
